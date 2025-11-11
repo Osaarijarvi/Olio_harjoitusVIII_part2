@@ -1,17 +1,23 @@
-namespace Olio_harjoitusVIII_part2;
+using System.Linq;
 
-/* Vaihe 2: Luo Opiskelija-luokka
-    Opiskelija-luokka edustaa yksittäistä opiskelijaa, jolla on lista kursseista ja toimintoja
-    kurssien lisäämiseen ja keskiarvon laskemiseen.*/
+namespace Olio_harjoitusVIII_part2;
 
 // TASK 2 step 2
 public class Student
 {
     private string studentName;
-
-    public Student(string name)
+    public string StudentName
     {
-        this.studentName = name;
+        get
+        {
+            return studentName;
+        }
+    }
+
+    // Overloaded Constructor
+    public Student(string studentName)
+    {
+        this.studentName = studentName;
     }
 
     // Empty list for students
@@ -20,38 +26,62 @@ public class Student
     // Empty list for courses
     List<Course> courses = new List<Course>();
     
+    
     // Method for adding students to the student list
     public void AddStudent(Student student)
     {
-        Console.WriteLine($"Olio luotu: {student}.");
-        courses.Add(student);
-        Console.WriteLine($"{studentName} lisätty.");
+        students.Add(student);
+        Console.WriteLine($"{student.studentName} lisätty.");
+        Console.WriteLine($"Järjestelmässä on nyt {students.Count} opiskelija(a).");
+    }
+
+    public override string ToString()
+    {
+        return $"{StudentName ?? "<new student name>"}";
     }
 
     // Method for adding courses to the course list
-    public void AddCourse(Course course)
+    public void AddCourse(Course course, string student)
     {
-        Console.WriteLine($"Olio luotu: {course}.");
-        courses.Add(course);
-        Console.WriteLine($"{course.CourseName} lisätty.");
-    }
+        // Find the student by matching the inputted name to the student list
+        Student student = students.FirstOrDefault(b => b.studentName == student_aChoice);
 
-    
-    // Method for removing a course from the list using the name of the course
-    public void RemoveCourse(string CoursetoRemove)
-    {
-        if (courses.Contains(CoursetoRemove))
+        if (student != null)
         {
-            courses.Remove(CoursetoRemove);
-            Console.WriteLine($"{CoursetoRemove} poistettu.");
+            courses.Add(course);
+            Console.WriteLine($"Kurssi {course.CourseName} — arvosana {course.Grade} lisätty opiskelijalle: {student.studentName}.");
+            Console.WriteLine($"DEBUG: collection count = {courses.Count}");
         }
+        // If the student name is not found, the user is advised to first add the student to the system
         else
         {
-            Console.WriteLine("Kurssia ei löydy. Kirjoita kurssin nimi uudestaan.");     }
+            Console.WriteLine("Opiskelijaa ei löydy. Lisää ensin opiskelija järjestelmään.");
+        }
     }
 
-        // Method for counting the average grade of courses in the list.
-        public void averageGrade()
+    //Method for listing all courses and their grades of a student.
+    public void ListCourses(Student student_cChoice)
+    {
+        // Find the student by matching the inputted name to the student list
+        Student student = students.FirstOrDefault(c => c.studentName == student_cChoice);
+
+        if (student != null)
+        {
+            if (courses.Count == 0)
+            {
+                Console.WriteLine("Opiskelijalla ei ole kursseja.");
+            }
+            else
+                foreach (Course course in courses)
+                {
+                    Console.WriteLine(course);
+                }
+        }
+    }
+    
+
+    // Method for counting the average grade of courses in the list.
+    public void averageGrade()
     {
         if (courses.Count > 1)
         {
@@ -66,4 +96,4 @@ public class Student
         
     }
 
-}
+    }

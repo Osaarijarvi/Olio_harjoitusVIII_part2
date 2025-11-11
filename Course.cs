@@ -30,5 +30,19 @@ public class Course
         {
             grade = value;
         }
-    }   
+    }
+
+    // Overloaded constructor
+    public Course(string courseName, string grade)
+    {
+        this.courseName = courseName;
+        this.grade = grade;
+    }
+
+
+    public override string ToString()
+    {
+        return $"{CourseName ?? "<unknown course name>"} — {Grade ?? "<unknown grade>"}";
+    }
+
 }

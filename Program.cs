@@ -5,24 +5,12 @@ class Program
     static void Main(string[] args)
     {
 
-        /*Kun ohjelma suoritetaan, käyttäjällä on seuraavat vaihtoehdot:
-        - Lisätä opiskelija – luo uuden opiskelijan nimellä.
-        - Lisätä kurssi opiskelijalle – lisää opiskelijan kurssilistaan uuden kurssin ja arvosanan.
-        - Näyttää opiskelijan kurssit – listaa kaikki opiskelijan kurssit ja arvosanat.
-        - Laskea opiskelijan keskiarvo – laskee opiskelijan kurssien keskiarvon ja näyttää sen.
-        - Lopettaa ohjelma – lopettaa ohjelman*/
-
-    {
     // TASK 2 STEP 3
 
     // isRunning initialized
     bool isRunning = true;
-
-    // create new instance for library
-    //Library collection = new Library();
-
-
-    while (isRunning)
+    
+        while (isRunning)
     {
         // User is asked to choose a function.
         Console.WriteLine();
@@ -32,49 +20,52 @@ class Program
         Console.WriteLine("c) Listaa kaikki opiskelijan kurssit arvosanoineen.");
         Console.WriteLine("d) Näytä opiskelijan kurssien keskiarvo.");
         Console.WriteLine("e) Lopeta ohjelma.");
-
-
-        string input = Console.ReadLine();
+        
+        // Make input case-insensitive and trim whitespace
+        string input = Console.ReadLine()?.Trim().ToLower();
+        Console.WriteLine($"DEBUG: menu input = '{input}'");
 
         switch (input)
         {
-        // a) adds a book to the library.
+        // a) adds a student to the system.
         case "a":
-            Console.WriteLine("Anna opiskelijan nimi:");
-            string studentName = Console.ReadLine();
+            Console.WriteLine("Anna uuden opiskelijan nimi:");
+            string student_aChoice = Console.ReadLine();
+
+            Student student_a = new Student(student_aChoice);
             
-            Student student = new Student(studentName);
-
             // call for Addbook()
-            courses.AddBook(book);
-                            break;
-                
+            student_a.AddStudent(student_a);
+                break;
 
-        // a) adds a course under the student.
+
+            // a) adds a course under the student.
         case "b":
-            Console.WriteLine("Anna kurssin nimi:");
+            Console.WriteLine("Anna sen opiskelijan nimi, jolle haluat lisätä kurssin:");
+            string student_bChoice = Console.ReadLine();
+            Student student_b = new Student(student_bChoice);
+        
+            Console.WriteLine("Anna lisättävän kurssin nimi:");
             string courseName = Console.ReadLine();
-            Console.WriteLine("Anna kurssin arvosana:");
+            
+            Console.WriteLine("Anna opiskelijan arvosana kurssista (1-5):");
             string grade = Console.ReadLine();
+            //int grade = int.Parse(gradeInput);
+            
 
             Course course = new Course(courseName, grade);
 
-            // call for Addbook()
-            courses.AddBook(book);
-                            break;
-    
-   
-        // c) removes a course from the course list.
-        case "c":
-            Console.WriteLine("Anna poistettavan kurssin nimi:");
-            string CoursetoRemove = Console.ReadLine();
-            courses.RemoveCourse(CoursetoRemove);
+            // call for addCourse()
+            student_b.AddCourse(course, student_bChoice);
             break;
-
-        //c) lists all the courses with their grades.
+    
+        //c) lists all the courses and the grades of a student chosen.
         case "c":
-            Console.WriteLine("Opiskelijan kurssit: ");
-            courses.ListBooks();
+            Console.WriteLine("Anna sen opiskelijan nimi, jonka kurssilistan haluat nähdä: ");
+            string student_cChoice = Console.ReadLine();
+            
+            Student student_c = new Student(student_cChoice);
+            student_c.ListCourses(Student student_cChoice);
                     break;
                 
         //d) display the average grade of the stundent.
@@ -90,4 +81,4 @@ class Program
         }
     }
 }
-}
+

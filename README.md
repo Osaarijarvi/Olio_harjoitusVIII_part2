@@ -11,7 +11,8 @@ Vaihe 1: Luo Kurssi-luokka
 Kurssi-luokka edustaa yksittäistä kurssia. Siinä on seuraavat ominaisuudet:
 - Ominaisuudet: Nimi ja Arvosana.
 - Metodit: Konstruktorin avulla luodaan uusia kursseja.
-- Vaihe 2: Luo Opiskelija-luokka
+
+Vaihe 2: Luo Opiskelija-luokka
     Opiskelija-luokka edustaa yksittäistä opiskelijaa, jolla on lista kursseista ja toimintoja
     kurssien lisäämiseen ja keskiarvon laskemiseen.
 
