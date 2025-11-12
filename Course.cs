@@ -39,7 +39,7 @@ public class Course
         this.grade = grade;
     }
 
-
+    // Override ToString() returns a readable representation of the course
     public override string ToString()
     {
         return $"{CourseName ?? "<unknown course name>"} — {Grade ?? "<unknown grade>"}";

@@ -20,80 +20,59 @@ public class Student
         this.studentName = studentName;
     }
 
-    // Empty list for students
-    List<Student> students = new List<Student>();
+    // Empty list for courses of each student
+    private List<Course> courses = new List<Course>();
 
-    // Empty list for courses
-    List<Course> courses = new List<Course>();
-    
-    
-    // Method for adding students to the student list
-    public void AddStudent(Student student)
+
+    // Method for adding courses for a specific student
+    public void AddCourse(Course course)
     {
-        students.Add(student);
-        Console.WriteLine($"{student.studentName} lisätty.");
-        Console.WriteLine($"Järjestelmässä on nyt {students.Count} opiskelija(a).");
-    }
-
-    public override string ToString()
-    {
-        return $"{StudentName ?? "<new student name>"}";
-    }
-
-    // Method for adding courses to the course list
-    public void AddCourse(Course course, string student)
-    {
-        // Find the student by matching the inputted name to the student list
-        Student student = students.FirstOrDefault(b => b.studentName == student_aChoice);
-
-        if (student != null)
-        {
-            courses.Add(course);
-            Console.WriteLine($"Kurssi {course.CourseName} — arvosana {course.Grade} lisätty opiskelijalle: {student.studentName}.");
-            Console.WriteLine($"DEBUG: collection count = {courses.Count}");
-        }
-        // If the student name is not found, the user is advised to first add the student to the system
-        else
-        {
-            Console.WriteLine("Opiskelijaa ei löydy. Lisää ensin opiskelija järjestelmään.");
-        }
+        courses.Add(course);
+        Console.WriteLine($"Kurssi {course.CourseName} — arvosana {course.Grade} lisätty opiskelijalle: {studentName}.");
+        Console.WriteLine($"DEBUG: {studentName} courselist count = {courses.Count}");
     }
 
     //Method for listing all courses and their grades of a student.
-    public void ListCourses(Student student_cChoice)
+    public void ListCourses()
     {
-        // Find the student by matching the inputted name to the student list
-        Student student = students.FirstOrDefault(c => c.studentName == student_cChoice);
-
-        if (student != null)
+        if (courses.Count == 0)
         {
-            if (courses.Count == 0)
-            {
-                Console.WriteLine("Opiskelijalla ei ole kursseja.");
-            }
-            else
-                foreach (Course course in courses)
-                {
-                    Console.WriteLine(course);
-                }
+            Console.WriteLine("Opiskelijalla ei ole kursseja.");
         }
+        else
+            foreach (var course in courses)
+            {
+                Console.WriteLine(course);
+            }
     }
     
 
     // Method for counting the average grade of courses in the list.
-    public void averageGrade()
+    public void CountAverage()
     {
-        if (courses.Count > 1)
+        // If the student has no courses user is informed of this. 
+        if (courses.Count == 0)
         {
-            int average = courses.Average();
-            string averageString = average.ToString();
-            Console.WriteLine($"Kurssikeskiarvosi on: {averageString}");
+            Console.WriteLine($"Opiskelijalla ei ole kursseja. Keskiarvoa ei voi laskea.");
         }
+        // Otherwise the average is counted and displayed.
         else
         {
-            Console.WriteLine($"Ei kursseja. Keskiarvoa ei voi laskea");
-        }
-        
-    }
+            // New list only for grades initialized
+            List<int> grades = new List<int>();
 
+            foreach (var course in courses)
+            {
+                // Course Grade string --> int
+                // Grades are added to the list
+                int gradeInt = int.Parse(course.Grade);
+                grades.Add(gradeInt);
+            }
+
+            // Average() is called, the result rounded and displayed.
+            double average = grades.Average();
+            average = Math.Round(average, 1, MidpointRounding.ToEven);
+            Console.WriteLine($"Kurssikeskiarvosi on: {average}");
+        }
     }
+}
