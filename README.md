@@ -1,5 +1,7 @@
 # Olio_harjoitusVIII_part2
 
+LINK TO COPILOT DISCUSSION: https://github.com/copilot/share/826a51a6-4044-80f0-b803-6e4b40aa40ce
+
 2. Tehtävä: Opiskelijat ja kurssien arvosanat
 
 Tässä ohjelmassa mallinnetaan opiskelijoita ja heidän suorittamiaan kursseja.
